@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EBeneSystems" Class="SQLDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=USI-TCASTILLO;Initial Catalog=EBeneSystems;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="EBeneSystemsConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tblAgentInfo" Member="tblAgentInfos">
+    <Type Name="tblAgentInfo">
+      <Column Name="strAgentSSN" Type="System.String" DbType="NChar(9) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="strAgentFName" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="strAgentLName" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Association Name="tblAgentInfo_tblEnrollment" Member="tblEnrollments" ThisKey="strAgentSSN" OtherKey="strAgentSSN" Type="tblEnrollment" />
+      <Association Name="tblAgentInfo_tblLicenseState" Member="tblLicenseStates" ThisKey="strAgentSSN" OtherKey="strAgentSSN" Type="tblLicenseState" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblStates" Member="tblStates">
+    <Type Name="tblState">
+      <Column Name="intStateID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strStateName" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="strStateAbbrv" Type="System.String" DbType="NChar(2) NOT NULL" CanBeNull="false" />
+      <Association Name="tblState_tblEnrollment" Member="tblEnrollments" ThisKey="intStateID" OtherKey="intState" Type="tblEnrollment" />
+      <Association Name="tblState_tblLicenseState" Member="tblLicenseStates" ThisKey="intStateID" OtherKey="intState" Type="tblLicenseState" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBeneficiariesPB" Member="tblBeneficiariesPBs">
+    <Type Name="tblBeneficiariesPB">
+      <Column Name="strEmployeeSSN" Type="System.String" DbType="NChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="strDependentSSN" Type="System.String" DbType="NChar(9)" CanBeNull="true" />
+      <Column Name="intEnrollment" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="intBenefit" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="strFName" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="strMName" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="strLName" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="strDOB" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="intRelationship" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intGender" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Association Name="tblBenefit_tblBeneficiariesPB" Member="tblBenefit" ThisKey="intBenefit" OtherKey="intBenefitID" Type="tblBenefit" IsForeignKey="true" />
+      <Association Name="tblEmployee_tblBeneficiariesPB" Member="tblEmployee" ThisKey="strEmployeeSSN" OtherKey="strEmployeeSSN" Type="tblEmployee" IsForeignKey="true" />
+      <Association Name="tblEnrollmentInfo_tblBeneficiariesPB" Member="tblEnrollmentInfo" ThisKey="intEnrollment" OtherKey="intEnrollmentID" Type="tblEnrollmentInfo" IsForeignKey="true" />
+      <Association Name="tblGender_tblBeneficiariesPB" Member="tblGender" ThisKey="intGender" OtherKey="intGenderID" Type="tblGender" IsForeignKey="true" />
+      <Association Name="tblRelationship_tblBeneficiariesPB" Member="tblRelationship" ThisKey="intRelationship" OtherKey="intRelID" Type="tblRelationship" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBenefits" Member="tblBenefits">
+    <Type Name="tblBenefit">
+      <Column Name="intBenefitID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="intBenefitType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="strName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="dtmEffective" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="strDescription" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="intRateBase" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intStudentAge" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intSAE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intNotStudentAge" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intNSAE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="strSQLEligibility" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="bitPaperApp" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="intOrder" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intPrioirity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblBenefit_tblBeneficiariesPB" Member="tblBeneficiariesPBs" ThisKey="intBenefitID" OtherKey="intBenefit" Type="tblBeneficiariesPB" />
+      <Association Name="tblBenefit_tblBenefitsDetail" Member="tblBenefitsDetails" ThisKey="intBenefitID" OtherKey="intBenefit" Type="tblBenefitsDetail" />
+      <Association Name="tblBenefit_tblDependentPB" Member="tblDependentPBs" ThisKey="intBenefitID" OtherKey="intBenefit" Type="tblDependentPB" />
+      <Association Name="tblBenefit_tblEnrollment" Member="tblEnrollments" ThisKey="intBenefitID" OtherKey="intBenefit" Type="tblEnrollment" />
+      <Association Name="tblBenefitsType_tblBenefit" Member="tblBenefitsType" ThisKey="intBenefitType" OtherKey="intBenefitTypeID" Type="tblBenefitsType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBenefitsDetail" Member="tblBenefitsDetails">
+    <Type Name="tblBenefitsDetail">
+      <Column Name="intBenefitDetailID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="intBenefit" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="intRate" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="strPlanName" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Association Name="tblBenefit_tblBenefitsDetail" Member="tblBenefit" ThisKey="intBenefit" OtherKey="intBenefitID" Type="tblBenefit" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="tblBenefitsRate_tblBenefitsDetail" Member="tblBenefitsRate" ThisKey="intRate" OtherKey="intRateID" Type="tblBenefitsRate" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBenefitsRates" Member="tblBenefitsRates">
+    <Type Name="tblBenefitsRate">
+      <Column Name="intRateID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="intBenefitDetail" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="intAgeFrom" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intAgeTo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intCoverageType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="dblEERate" Type="System.Decimal" DbType="SmallMoney NOT NULL" CanBeNull="false" />
+      <Column Name="dblERRate" Type="System.Decimal" DbType="SmallMoney NOT NULL" CanBeNull="false" />
+      <Association Name="tblBenefitsRate_tblBenefitsDetail" Member="tblBenefitsDetails" ThisKey="intRateID" OtherKey="intRate" Type="tblBenefitsDetail" />
+      <Association Name="tblCoverageType_tblBenefitsRate" Member="tblCoverageType" ThisKey="intCoverageType" OtherKey="intCoverageTypeID" Type="tblCoverageType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBenefitsType" Member="tblBenefitsTypes">
+    <Type Name="tblBenefitsType">
+      <Column Name="intBenefitTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strName" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Association Name="tblBenefitsType_tblBenefit" Member="tblBenefits" ThisKey="intBenefitTypeID" OtherKey="intBenefitType" Type="tblBenefit" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblClientInfo" Member="tblClientInfos">
+    <Type Name="tblClientInfo">
+      <Column Name="intClientID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strClientName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="intPerpetual" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="dtmPerpEffDt" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="intAltEEID" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="dtmLastUpdated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="tblClientInfo_tblEnrollmentInfo" Member="tblEnrollmentInfos" ThisKey="intClientID" OtherKey="intClient" Type="tblEnrollmentInfo" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblCoverageType" Member="tblCoverageTypes">
+    <Type Name="tblCoverageType">
+      <Column Name="intCoverageTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strName" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="tblCoverageType_tblBenefitsRate" Member="tblBenefitsRates" ThisKey="intCoverageTypeID" OtherKey="intCoverageType" Type="tblBenefitsRate" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblDependentPB" Member="tblDependentPBs">
+    <Type Name="tblDependentPB">
+      <Column Name="strEmployeeSSN" Type="System.String" DbType="NChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="strDependentSSN" Type="System.String" DbType="NChar(9)" CanBeNull="true" />
+      <Column Name="intEnrollment" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="intBenefit" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="strFName" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="strMName" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="strLName" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="strDOB" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="intRelationship" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intGender" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Association Name="tblBenefit_tblDependentPB" Member="tblBenefit" ThisKey="intBenefit" OtherKey="intBenefitID" Type="tblBenefit" IsForeignKey="true" />
+      <Association Name="tblEmployee_tblDependentPB" Member="tblEmployee" ThisKey="strEmployeeSSN" OtherKey="strEmployeeSSN" Type="tblEmployee" IsForeignKey="true" />
+      <Association Name="tblEnrollmentInfo_tblDependentPB" Member="tblEnrollmentInfo" ThisKey="intEnrollment" OtherKey="intEnrollmentID" Type="tblEnrollmentInfo" IsForeignKey="true" />
+      <Association Name="tblGender_tblDependentPB" Member="tblGender" ThisKey="intGender" OtherKey="intGenderID" Type="tblGender" IsForeignKey="true" />
+      <Association Name="tblRelationship_tblDependentPB" Member="tblRelationship" ThisKey="intRelationship" OtherKey="intRelID" Type="tblRelationship" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblDependents" Member="tblDependents">
+    <Type Name="tblDependent">
+      <Column Name="intDepID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strEmployeeSSN" Type="System.String" DbType="NChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="intGender" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="strDependentSSN" Type="System.String" DbType="NChar(9)" CanBeNull="true" />
+      <Column Name="strClientDepID" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="strFName" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="strMName" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="strLName" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="strDOB" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="intRelationship" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblGender_tblDependent" Member="tblGender" ThisKey="intGender" OtherKey="intGenderID" Type="tblGender" IsForeignKey="true" />
+      <Association Name="tblRelationship_tblDependent" Member="tblRelationship" ThisKey="intRelationship" OtherKey="intRelID" Type="tblRelationship" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblElections" Member="tblElections">
+    <Type Name="tblElection">
+      <Column Name="intElectionID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblEmployees" Member="tblEmployees">
+    <Type Name="tblEmployee">
+      <Column Name="intID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strEmployeeSSN" Type="System.String" DbType="NChar(9) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="intEnrollment" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="strFName" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="strLName" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="strMName" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="intGender" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="dtmDOB" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="strStreet1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="strStreet2" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="strCity" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="strState" Type="System.String" DbType="NChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="strZip" Type="System.String" DbType="NChar(5)" CanBeNull="true" />
+      <Column Name="strHomePhone" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="strCellPhone" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="bitSmoker" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="strAltEEID" Type="System.String" DbType="NChar(9)" CanBeNull="true" />
+      <Column Name="dtmHiredDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="strTitle" Type="System.String" DbType="NChar(25)" CanBeNull="true" />
+      <Column Name="strEEID" Type="System.String" DbType="NVarChar(14)" CanBeNull="true" />
+      <Column Name="strLocation" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="strDepartment" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="strEEClass" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="strWorkPhone" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="strPayType" Type="System.Char" DbType="NChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="strStatus" Type="System.String" DbType="NChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="intHours" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="strSalary" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="intWorkWeeks" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="intPayFrequency" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="intDeductionFrequency" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="strUnionCode" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="strEmploymentStatus" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Association Name="tblEmployee_tblBeneficiariesPB" Member="tblBeneficiariesPBs" ThisKey="strEmployeeSSN" OtherKey="strEmployeeSSN" Type="tblBeneficiariesPB" />
+      <Association Name="tblEmployee_tblDependentPB" Member="tblDependentPBs" ThisKey="strEmployeeSSN" OtherKey="strEmployeeSSN" Type="tblDependentPB" />
+      <Association Name="tblEmployee_tblEnrollment" Member="tblEnrollments" ThisKey="strEmployeeSSN" OtherKey="strEmployeeSSN" Type="tblEnrollment" />
+      <Association Name="tblEnrollmentInfo_tblEmployee" Member="tblEnrollmentInfo" ThisKey="intEnrollment" OtherKey="intEnrollmentID" Type="tblEnrollmentInfo" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="tblGender_tblEmployee" Member="tblGender" ThisKey="intGender" OtherKey="intGenderID" Type="tblGender" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblEnrollmentInfo" Member="tblEnrollmentInfos">
+    <Type Name="tblEnrollmentInfo">
+      <Column Name="intEnrollmentID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="intClient" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="dtmStart" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="dtmEnd" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="tblEnrollmentInfo_tblBeneficiariesPB" Member="tblBeneficiariesPBs" ThisKey="intEnrollmentID" OtherKey="intEnrollment" Type="tblBeneficiariesPB" />
+      <Association Name="tblEnrollmentInfo_tblDependentPB" Member="tblDependentPBs" ThisKey="intEnrollmentID" OtherKey="intEnrollment" Type="tblDependentPB" />
+      <Association Name="tblEnrollmentInfo_tblEmployee" Member="tblEmployees" ThisKey="intEnrollmentID" OtherKey="intEnrollment" Type="tblEmployee" />
+      <Association Name="tblClientInfo_tblEnrollmentInfo" Member="tblClientInfo" ThisKey="intClient" OtherKey="intClientID" Type="tblClientInfo" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblEnrollments" Member="tblEnrollments">
+    <Type Name="tblEnrollment">
+      <Column Name="strEmployeeSSN" Type="System.String" DbType="NChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="intBenefit" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="strAgentSSN" Type="System.String" DbType="NChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="dtmEnrollDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="strCity" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="intState" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="intTrackingId" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="tblAgentInfo_tblEnrollment" Member="tblAgentInfo" ThisKey="strAgentSSN" OtherKey="strAgentSSN" Type="tblAgentInfo" IsForeignKey="true" />
+      <Association Name="tblBenefit_tblEnrollment" Member="tblBenefit" ThisKey="intBenefit" OtherKey="intBenefitID" Type="tblBenefit" IsForeignKey="true" />
+      <Association Name="tblEmployee_tblEnrollment" Member="tblEmployee" ThisKey="strEmployeeSSN" OtherKey="strEmployeeSSN" Type="tblEmployee" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="tblState_tblEnrollment" Member="tblState" ThisKey="intState" OtherKey="intStateID" Type="tblState" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblGender" Member="tblGenders">
+    <Type Name="tblGender">
+      <Column Name="intGenderID" Type="System.Int16" DbType="SmallInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="strGenderName" Type="System.Char" DbType="NChar(1) NOT NULL" CanBeNull="false" />
+      <Association Name="tblGender_tblBeneficiariesPB" Member="tblBeneficiariesPBs" ThisKey="intGenderID" OtherKey="intGender" Type="tblBeneficiariesPB" />
+      <Association Name="tblGender_tblDependentPB" Member="tblDependentPBs" ThisKey="intGenderID" OtherKey="intGender" Type="tblDependentPB" />
+      <Association Name="tblGender_tblDependent" Member="tblDependents" ThisKey="intGenderID" OtherKey="intGender" Type="tblDependent" />
+      <Association Name="tblGender_tblEmployee" Member="tblEmployees" ThisKey="intGenderID" OtherKey="intGender" Type="tblEmployee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblLicenseStates" Member="tblLicenseStates">
+    <Type Name="tblLicenseState">
+      <Column Name="strAgentSSN" Type="System.String" DbType="NChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="intState" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblAgentInfo_tblLicenseState" Member="tblAgentInfo" ThisKey="strAgentSSN" OtherKey="strAgentSSN" Type="tblAgentInfo" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="tblState_tblLicenseState" Member="tblState" ThisKey="intState" OtherKey="intStateID" Type="tblState" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblRelationships" Member="tblRelationships">
+    <Type Name="tblRelationship">
+      <Column Name="intRelID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="strRelType" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="tblRelationship_tblBeneficiariesPB" Member="tblBeneficiariesPBs" ThisKey="intRelID" OtherKey="intRelationship" Type="tblBeneficiariesPB" />
+      <Association Name="tblRelationship_tblDependentPB" Member="tblDependentPBs" ThisKey="intRelID" OtherKey="intRelationship" Type="tblDependentPB" />
+      <Association Name="tblRelationship_tblDependent" Member="tblDependents" ThisKey="intRelID" OtherKey="intRelationship" Type="tblDependent" />
+    </Type>
+  </Table>
+</Database>
